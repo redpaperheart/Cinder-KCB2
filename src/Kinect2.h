@@ -545,6 +545,17 @@ protected:
 	virtual void										update();
 
 	uint8_t												isSensorOpen() const;
+
+	void audioThreadCallback();
+	void bodyThreadCallback();
+	void bodyIndexThreadCallback();
+	void colorThreadCallback();
+	void depthThreadCallback();
+	void face2dThreadCallback();
+	void face3dThreadCallback();
+	void infraredThreadCallback();
+	void infraredLongExposureThreadCallback();
+
 	KCBHANDLE											mKinect;
 	IKinectSensor*										mSensor;
 
