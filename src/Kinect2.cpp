@@ -1206,7 +1206,6 @@ void Device::start()
 
 void Device::stop()
 {
-	CI_LOG_I( "stopping Processes.." );
 	mThreadsShouldQuit = true;
 
 	for ( size_t i = (size_t)FrameType_Audio; i < (size_t)FrameType_InfraredLongExposure; ++i ) {
@@ -1214,8 +1213,6 @@ void Device::stop()
 	}
 
 	if ( mKinect != KCB_INVALID_HANDLE ) {
-		CI_LOG_I( "Calling KCBCloseSensor.." );
-
 		long hr = KCBCloseSensor( &mKinect );
 		if ( FAILED( hr ) ) {
 			throw ExcDeviceCloseFailed( hr );
@@ -1223,8 +1220,6 @@ void Device::stop()
 			mKinect = KCB_INVALID_HANDLE;	
 		}
 	}
-
-	CI_LOG_I( "complete." );
 }
 
 
