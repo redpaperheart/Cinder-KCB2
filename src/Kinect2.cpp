@@ -791,7 +791,7 @@ Device::Device()
 	mEventHandlerColor( nullptr ), mEventHandlerDepth( nullptr ), 
 	mEventHandlerFace2d( nullptr ), mEventHandlerFace3d( nullptr ), 
 	mEventHandlerInfrared( nullptr ), mEventHandlerInfraredLongExposure( nullptr ), 
-	mKinect( KCB_INVALID_HANDLE ), mSensor( nullptr )
+	mKinect( KCB_INVALID_HANDLE ), mSensor( nullptr ), mThreadsShouldQuit( { false } )
 {
 	if ( sFaceModelIndexCount == 0 ) {
 		GetFaceModelTriangleCount( &sFaceModelIndexCount );
@@ -1163,6 +1163,8 @@ void Device::start()
 		throw ExcDeviceOpenFailed();
 	}
 
+	mThreadsShouldQuit = false;
+
 	uint8_t sensorIsOpen = isSensorOpen();
 	for ( size_t frameType = (size_t)FrameType_Audio; frameType < (size_t)FrameType_InfraredLongExposure; ++frameType ) {
 		mProcesses[ (FrameType)frameType ]	= Process();
@@ -1203,6 +1205,7 @@ void Device::start()
 void Device::stop()
 {
 	CI_LOG_I( "stopping Processes.." );
+	mThreadsShouldQuit = true;
 
 	for ( size_t i = (size_t)FrameType_Audio; i < (size_t)FrameType_InfraredLongExposure; ++i ) {
 		mProcesses.at( (FrameType)i ).stop();
@@ -1228,6 +1231,9 @@ void Device::audioThreadCallback()
 	auto &process = mProcesses[FrameType_Audio];
 
 	while ( process.mRunning ) {
+		if( mThreadsShouldQuit )
+			return;
+
 		if ( process.mNewData || mKinect == KCB_INVALID_HANDLE || mEventHandlerAudio == nullptr  ) {
 			this_thread::sleep_for( chrono::milliseconds( kThreadSleepDuration ) );
 			continue;
@@ -1268,6 +1274,9 @@ void Device::bodyThreadCallback()
 	auto &process = mProcesses[FrameType_Body];
 
 	while ( process.mRunning ) {
+		if( mThreadsShouldQuit )
+			return;
+
 		if ( process.mNewData || mKinect == KCB_INVALID_HANDLE || mEventHandlerBody == nullptr ) {
 			this_thread::sleep_for( chrono::milliseconds( kThreadSleepDuration ) );
 			continue;
@@ -1441,6 +1450,9 @@ void Device::bodyIndexThreadCallback()
 	auto &process = mProcesses[FrameType_BodyIndex];
 
 	while ( process.mRunning ) {
+		if( mThreadsShouldQuit )
+			return;
+
 		if ( process.mNewData || mKinect == KCB_INVALID_HANDLE || mEventHandlerBodyIndex == nullptr ) {
 			this_thread::sleep_for( chrono::milliseconds( kThreadSleepDuration ) );
 			continue;
@@ -1487,6 +1499,9 @@ void Device::colorThreadCallback()
 	auto &process = mProcesses[FrameType_Color];
 
 	while ( process.mRunning ) {
+		if( mThreadsShouldQuit )
+			return;
+
 		if ( process.mNewData || mKinect == KCB_INVALID_HANDLE || mEventHandlerColor == nullptr ) {
 			this_thread::sleep_for( chrono::milliseconds( kThreadSleepDuration ) );
 			continue;
@@ -1534,6 +1549,9 @@ void Device::depthThreadCallback()
 	auto &process = mProcesses[FrameType_Depth];
 
 	while ( process.mRunning ) {
+		if( mThreadsShouldQuit )
+			return;
+
 		if ( process.mNewData || mKinect == KCB_INVALID_HANDLE || mEventHandlerDepth == nullptr ) {
 			this_thread::sleep_for( chrono::milliseconds( kThreadSleepDuration ) );
 			continue;
@@ -1582,6 +1600,9 @@ void Device::face2dThreadCallback()
 	auto &process = mProcesses[FrameType_Face2d];
 
 	while ( process.mRunning ) {
+		if( mThreadsShouldQuit )
+			return;
+
 		if ( process.mNewData || mKinect == KCB_INVALID_HANDLE || mEventHandlerFace2d == nullptr ) {
 			this_thread::sleep_for( chrono::milliseconds( kThreadSleepDuration ) );
 			continue;
@@ -1695,6 +1716,9 @@ void Device::face3dThreadCallback()
 	auto &process = mProcesses[FrameType_Face3d];
 
 	while ( process.mRunning ) {
+		if( mThreadsShouldQuit )
+			return;
+
 		if ( process.mNewData || mKinect == KCB_INVALID_HANDLE || mEventHandlerFace3d == nullptr ) {
 			this_thread::sleep_for( chrono::milliseconds( kThreadSleepDuration ) );
 			continue;
@@ -1854,6 +1878,9 @@ void Device::infraredThreadCallback()
 	auto &process = mProcesses[FrameType_Infrared];
 
 	while ( process.mRunning ) {
+		if( mThreadsShouldQuit )
+			return;
+
 		if ( process.mNewData || mKinect == KCB_INVALID_HANDLE || mEventHandlerInfrared == nullptr ) {
 			this_thread::sleep_for( chrono::milliseconds( kThreadSleepDuration ) );
 			continue;
@@ -1900,6 +1927,9 @@ void Device::infraredLongExposureThreadCallback()
 	auto &process = mProcesses[FrameType_InfraredLongExposure];
 
 	while ( process.mRunning ) {
+		if( mThreadsShouldQuit )
+			return;
+
 		if ( process.mNewData || mKinect == KCB_INVALID_HANDLE || mEventHandlerInfraredLongExposure == nullptr ) {
 			this_thread::sleep_for( chrono::milliseconds( kThreadSleepDuration ) );
 			continue;

@@ -584,6 +584,7 @@ protected:
 	bool												mEnabledFaceMesh;
 	bool												mEnabledHandTracking;
 	bool												mEnabledJointTracking;
+	std::atomic_bool									mThreadsShouldQuit;
 
 	static uint32_t										sFaceModelIndexCount;
 	static uint32_t										sFaceModelVertexCount;
