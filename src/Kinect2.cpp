@@ -804,11 +804,13 @@ Device::Device()
 		mFaceShapeDeformations[ i ] = 0.0f;
 	}
 	
-	App::get()->getSignalUpdate().connect( bind( &Device::update, this ) );
+	mConnectionAppUpdate = App::get()->getSignalUpdate().connect( bind( &Device::update, this ) );
 }
 
 Device::~Device()
 {
+	mConnectionAppUpdate.disconnect();
+
 	stop();
 	if ( mSensor != nullptr ) {
 		mSensor->Release();
