@@ -87,7 +87,7 @@ Surface8uRef colorizeBodyIndex( const Channel8uRef& bodyIndexChannel )
 			while ( iterChannel.pixel() && iterSurface.pixel() ) {
 				size_t index				= (size_t)iterChannel.v();
 				ColorA8u color( getBodyColor( index ), 0xFF );
-				if ( index == 0 || index > BODY_COUNT ) {
+				if( index >= BODY_COUNT ) {
 					color.a		= 0x00;
 				}
 				iterSurface.r()	= color.r;
@@ -102,23 +102,14 @@ Surface8uRef colorizeBodyIndex( const Channel8uRef& bodyIndexChannel )
 
 Color8u getBodyColor( size_t index )
 {
-	switch ( index ) {
-	case 0:
-		return Color8u::black();
-	case 1:
-		return Color8u( 0xFF, 0x00, 0x00 );
-	case 2:
-		return Color8u( 0x00, 0xFF, 0x00 );
-	case 3:
-		return Color8u( 0x00, 0x00, 0xFF );
-	case 4:
-		return Color8u( 0xFF, 0xFF, 0x00 );
-	case 5:
-		return Color8u( 0x00, 0xFF, 0xFF );
-	case 6:
-		return Color8u( 0xFF, 0x00, 0xFF );
-	default:
-		return Color8u::white();
+	switch( index ) {
+		case 0: 	return Color8u( 0xFF, 0x00, 0x00 );
+		case 1:		return Color8u( 0x00, 0xFF, 0x00 );
+		case 2:		return Color8u( 0x00, 0x00, 0xFF );
+		case 3:		return Color8u( 0xFF, 0xFF, 0x00 );
+		case 4:		return Color8u( 0x00, 0xFF, 0xFF );
+		case 5:		return Color8u( 0xFF, 0x00, 0xFF );
+		default:	return Color8u::black();
 	}
 }
 
