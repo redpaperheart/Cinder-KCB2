@@ -188,7 +188,7 @@ xcopy /e /i /y "$(KINECTSDK20_DIR)Redist\Face\$(PlatformTarget)\NuiDatabase" "$(
     </ProjectReference>
     <Link>
       <AdditionalDependencies>cinder.lib;KCBv2.lib;kinect20.lib;Kinect20.Face.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\..\lib\msw\$(PlatformTarget);..\..\..\..\..\lib\msw\$(PlatformTarget)\$(Configuration)\$(PlatformToolset);..\..\..\lib\$(PlatformTarget)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\..\lib\msw\$(PlatformTarget);..\..\..\..\..\lib\msw\$(PlatformTarget)\$(Configuration)\$(PlatformToolset);..\..\..\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
       <SubSystem>Windows</SubSystem>
@@ -224,7 +224,7 @@ xcopy /e /i /y "$(KINECTSDK20_DIR)Redist\Face\$(PlatformTarget)\NuiDatabase" "$(
     </ProjectReference>
     <Link>
       <AdditionalDependencies>cinder.lib;KCBv2.lib;kinect20.lib;Kinect20.Face.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\..\lib\msw\$(PlatformTarget);..\..\..\..\..\lib\msw\$(PlatformTarget)\$(Configuration)\$(PlatformToolset);..\..\..\lib\$(PlatformTarget)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\..\lib\msw\$(PlatformTarget);..\..\..\..\..\lib\msw\$(PlatformTarget)\$(Configuration)\$(PlatformToolset);..\..\..\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
       <SubSystem>Windows</SubSystem>
