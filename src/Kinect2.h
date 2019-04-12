@@ -92,6 +92,9 @@ class IFace
 {
 public:
 	IFace();
+	IFace( const IFace& rhs );
+
+	IFace&											operator=( const IFace& rhs );
 
 	uint64_t										getId() const;
 	uint8_t											getIndex() const;
@@ -110,6 +113,9 @@ class Face2d : public IFace
 {
 public:
 	Face2d();
+	Face2d( const Face2d& rhs );
+
+	Face2d&											operator=( const Face2d& rhs );
 
 	const ci::Rectf&								getBoundsColor() const;
 	const ci::Rectf&								getBoundsInfrared() const;
@@ -134,6 +140,9 @@ class Face3d : public IFace
 {
 public:
 	Face3d();
+	Face3d( const Face3d& rhs );
+
+	Face3d&											operator=( const Face3d& rhs );
 
 	const ci::Rectf&								getBounds() const;
 	FaceAlignmentQuality							getFaceAlignmentQuality() const;
@@ -172,6 +181,9 @@ public:
 	{
 	public:
 		Hand();
+		Hand( const Hand& rhs );
+
+		Hand&											operator=( const Hand& rhs );
 
 		TrackingConfidence								getConfidence() const;
 		HandState										getState() const;
@@ -188,8 +200,10 @@ public:
 	{
 	public:
 		Joint();
+		Joint( const Joint& rhs );
+
+		Joint&											operator=( const Joint& rhs );
 		
-		uint64_t										getId() const;
 		const ci::quat&									getOrientation() const;
 		JointType										getParentJoint() const;
 		const ci::vec3&									getPosition() const;
@@ -209,6 +223,9 @@ public:
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	Body();
+	Body( const Body& rhs );
+
+	Body&												operator=( const Body& rhs );
 
 	float												calcConfidence( bool weighted = false ) const;
 
@@ -248,6 +265,9 @@ class Frame
 {
 public:
 	Frame();
+	Frame( const Frame& rhs );
+
+	Frame&												operator=( const Frame& rhs );
 
 	long long											getTimeStamp() const;
 protected:
@@ -262,6 +282,9 @@ class CameraFrame
 {
 public:
 	CameraFrame();
+	CameraFrame( const CameraFrame& rhs );
+
+	CameraFrame&										operator=( const CameraFrame& rhs );
 
 	float												getFovDiagonal() const;
 	float												getFovHorizontal() const;
@@ -282,6 +305,10 @@ class AudioFrame : public Frame
 {
 public:
 	AudioFrame();
+	AudioFrame( const AudioFrame& rhs );
+	
+	AudioFrame&											operator=( const AudioFrame& rhs );
+
 	~AudioFrame();
 
 	float												getBeamAngle() const;
@@ -305,6 +332,9 @@ class BodyFrame : public Frame
 {
 public:
 	BodyFrame();
+	BodyFrame( const BodyFrame& rhs );
+
+	BodyFrame&											operator=( const BodyFrame& rhs );
 
 	const std::vector<Body>&							getBodies() const;
 protected:
@@ -320,6 +350,9 @@ class ChannelFrameT : public Frame
 {
 public:
 	ChannelFrameT();
+	ChannelFrameT( const ChannelFrameT& rhs );
+
+	ChannelFrameT&										operator=( const ChannelFrameT& rhs );
 
 	const std::shared_ptr<ci::ChannelT<T> >&			getChannel() const;
 protected:
@@ -337,6 +370,9 @@ class ColorFrame : public CameraFrame, public Frame
 {
 public:
 	ColorFrame();
+	ColorFrame( const ColorFrame& rhs );
+
+	ColorFrame&											operator=( const ColorFrame& rhs );
 
 	const ci::Surface8uRef&								getSurface() const;
 protected:
@@ -351,6 +387,9 @@ class DepthFrame : public CameraFrame, public ChannelFrame16u
 {
 public:
 	DepthFrame();
+	DepthFrame( const DepthFrame& rhs );
+
+	DepthFrame&											operator=( const DepthFrame& rhs );
 protected:
 	friend class										Device;
 };
@@ -366,6 +405,9 @@ class Face2dFrame : public Frame
 {
 public:
 	Face2dFrame();
+	Face2dFrame( const Face2dFrame& rhs );
+
+	Face2dFrame&										operator=( const Face2dFrame& rhs );
 
 	const std::vector<Face2d>&							getFaces() const;
 protected:
@@ -380,6 +422,9 @@ class Face3dFrame : public Frame
 {
 public:
 	Face3dFrame();
+	Face3dFrame( const Face3dFrame& rhs );
+
+	Face3dFrame&										operator=( const Face3dFrame& rhs );
 
 	const std::vector<Face3d>&							getFaces() const;
 protected:
@@ -402,6 +447,10 @@ protected:
 	{
 	public:
 		Process();
+		Process( const Process& rhs );
+
+		Process&										operator=( const Process& rhs );
+
 		~Process();
 
 		void											start();
